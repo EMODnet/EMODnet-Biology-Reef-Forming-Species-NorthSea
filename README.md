@@ -2,7 +2,7 @@
 
 ## Introduction
 
-{{product_introduction}}
+Due to fishing and other human activities, reef forming species have almost completely disappeared over roughly the past century. They are important structures that accomodate juvenile fish and other small organisms. For protection of areas where such reefs could possibly be reintroduced, it is important to define areas that are suitable habitats. This product aims to classify areas in the North Sea based on current occurence in combination with environmental variables that are particularly suitable for these organisms.
 
 ## Directory structure
 
