@@ -205,10 +205,10 @@ att.put.nc(nc, variable = "crs", name = "GeoTransform", type = "NC_CHAR", value 
 
 
 # Create the presence_absence variable defined by the four dimensions
-var.def.nc(nc, varname = "habitat_suitability", vartype = "NC_INT", dimensions = c("lon", "lat", "aphiaid"))
+var.def.nc(nc, varname = "habitat_suitability", vartype = "NC_DOUBLE", dimensions = c("lon", "lat", "aphiaid"))
 
 # Add attributes
-att.put.nc(nc, variable = "habitat_suitability", name = "_FillValue", type = "NC_INT", value = -99999)
+att.put.nc(nc, variable = "habitat_suitability", name = "_FillValue", type = "NC_DOUBLE", value = -99999)
 att.put.nc(nc, variable = "habitat_suitability", name = "long_name", type = "NC_CHAR", value = "Modelled habitat suitability for a species.")
 
 var.put.nc(nc, variable = "habitat_suitability", data = array) 
