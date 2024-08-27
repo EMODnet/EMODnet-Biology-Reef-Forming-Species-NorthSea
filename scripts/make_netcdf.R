@@ -15,7 +15,7 @@ proUTM <- CRS("+proj=utm +zone=31 +ellps=GRS80 +units=m +no_defs")
 
 #== make Specieslist ================================ 
 
-source('make_taxon_list.R')
+source('scripts/make_taxon_list.R')
 taxon <- taxon %>% 
   mutate(
     filename = case_when(
@@ -33,12 +33,14 @@ dataset.list <- brick(lapply(taxon$filename, function(x) raster(file.path('produ
 names(dataset.list) <- taxon$Species
 
 dataset.list.wg <- raster::projectRaster(from = dataset.list, crs = proWG)
-plot(dataset.list.wg)
-plot(dataset.list)
+# plot(dataset.list.wg)
+# plot(dataset.list)
 
 # Extract the unique and sorted values of the 4 dimensions
 lon <- sort(unique(raster::coordinates(dataset.list.wg)[,1]))
-lat <- rev(sort(unique(raster::coordinates(dataset.list.wg)[,2])))
+## QGIS requires reversed sorted lat values. EMODnet normally sorted.
+# lat <- rev(sort(unique(raster::coordinates(dataset.list.wg)[,2])))
+lat <- sort(unique(raster::coordinates(dataset.list.wg)[,2]))
 
 # no time dimension
 
