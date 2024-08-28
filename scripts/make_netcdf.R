@@ -6,16 +6,14 @@ library(dplyr)
 library(glue)
 library(raster)
 
-proWG<-CRS("+proj=longlat +datum=WGS84")
+# projection strings
+proWG  <- CRS("+proj=longlat +datum=WGS84")
 proUTM <- CRS("+proj=utm +zone=31 +ellps=GRS80 +units=m +no_defs")
-
-
-# dataset = raster()
-# load('product/rf_model_Sabellaria.Rdata')
 
 #== make Specieslist ================================ 
 
 source('scripts/make_taxon_list.R')
+
 taxon <- taxon %>% 
   mutate(
     filename = case_when(
@@ -26,38 +24,22 @@ taxon <- taxon %>%
     )
   )
 
-
 # or all in one go
 
 dataset.list <- brick(lapply(taxon$filename, function(x) raster(file.path('product', x))))
 names(dataset.list) <- taxon$Species
 
 dataset.list.wg <- raster::projectRaster(from = dataset.list, crs = proWG)
-# plot(dataset.list.wg)
-# plot(dataset.list)
 
-# Extract the unique and sorted values of the 4 dimensions
+# Extract the unique and sorted values of the 4 dimensions for later use 
 lon <- sort(unique(raster::coordinates(dataset.list.wg)[,1]))
-## QGIS requires reversed sorted lat values. EMODnet normally sorted.
-# lat <- rev(sort(unique(raster::coordinates(dataset.list.wg)[,2])))
 lat <- sort(unique(raster::coordinates(dataset.list.wg)[,2]))
 
 # no time dimension
 
 AphiaID <- taxon$AphiaID_species
 
-# # Use expand.grid() to create a data frame with all the possible 
-# # combinations of the 4 dimensions
-# longer <- expand.grid(
-#   lon = lon, 
-#   lat = lat, 
-#   # time = time, 
-#   aphiaid = AphiaID, 
-#   stringsAsFactors = FALSE)
-
-# Define unique identifier again and merge the variable occurrenceStatus 
-# with presences and absences
-
+# convert rasters to dataframes
 dataset2 <- lapply(
   1:4, 
   function(ii) 
@@ -65,19 +47,16 @@ dataset2 <- lapply(
     mutate(AphiaID = taxon$AphiaID_species[ii]) %>%
     rename(lon = x,
            lat = y,
-           value = 3)
+           value = 3) %>%
+    arrange(lat, lon)
 ) %>%
   bind_rows()
-
-# Save for later
-# write_csv(dataset2, "./data/derived/all_products.csv")
 
 
 #== create 3d array =============================================
 
 # The product of the lengths of all dimensions
-length(unique(dataset2$lon)) * length(unique(dataset2$lat)) * length(unique(dataset2$AphiaID))
-#> 
+length(unique(dataset2$lon)) * length(unique(dataset2$lat)) * length(unique(dataset2$AphiaID)) == nrow(dataset2)
 
 # Is the same as the length of the variable of interest, including all 
 # possible combinations of the dimensions even if this coerce NA's
@@ -90,6 +69,9 @@ array <- array(
     length(unique(dataset2$lat)), 
     length(unique(dataset2$AphiaID)))
 )
+
+dim(array)
+
 
 #== create netcdf file =========================================
 
