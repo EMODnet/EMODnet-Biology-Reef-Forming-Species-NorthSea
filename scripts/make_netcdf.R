@@ -139,6 +139,7 @@ dim.def.nc(nc, dimname = "string80", dimlength = 80)
 # Add aphiaid variable and attributes 
 var.def.nc(nc, varname = "aphiaid", vartype = "NC_INT", dimensions = "aphiaid")
 att.put.nc(nc, variable = "aphiaid", name = "long_name", type = "NC_CHAR", value = "Life Science Identifier - World Register of Marine Species")
+att.put.nc(nc, variable = "aphiaid", name = "units", type = "NC_CHAR", value = "level")
 
 # Put aphiaid data
 var.put.nc(nc, variable = "aphiaid", data = taxon$AphiaID_species)
@@ -164,7 +165,7 @@ att.put.nc(nc, variable = "taxon_lsid", name = "standard_name", type = "NC_CHAR"
 att.put.nc(nc, variable = "taxon_lsid", name = "long_name", type = "NC_CHAR", value = "Life Science Identifier - World Register of Marine Species")
 
 # Put taxon_name data
-var.put.nc(nc, variable = "taxon_lsid", data = taxon$Species)
+var.put.nc(nc, variable = "taxon_lsid", data = paste0("urn:lsid:marinespecies.org:taxname:", taxon$Species))
 
 # Check
 var.get.nc(nc, variable = "taxon_lsid")
@@ -189,13 +190,13 @@ att.put.nc(nc, variable = "crs", name = "GeoTransform", type = "NC_CHAR", value 
 
 
 # Create the presence_absence variable defined by the four dimensions
-var.def.nc(nc, varname = "habitat_suitability", vartype = "NC_DOUBLE", dimensions = c("lon", "lat", "aphiaid"))
+var.def.nc(nc, varname = "probability_of_occurrence", vartype = "NC_DOUBLE", dimensions = c("lon", "lat", "aphiaid"))
 
 # Add attributes
-att.put.nc(nc, variable = "habitat_suitability", name = "_FillValue", type = "NC_DOUBLE", value = -99999)
-att.put.nc(nc, variable = "habitat_suitability", name = "long_name", type = "NC_CHAR", value = "Modelled habitat suitability for a species.")
+att.put.nc(nc, variable = "probability_of_occurrence", name = "_FillValue", type = "NC_DOUBLE", value = -99999)
+att.put.nc(nc, variable = "probability_of_occurrence", name = "long_name", type = "NC_CHAR", value = "Probability of occurrence of biological entity specified elsewhere per unit area of the bed")
 
-var.put.nc(nc, variable = "habitat_suitability", data = array) 
+var.put.nc(nc, variable = "probability_of_occurrence", data = array) 
 
 sync.nc(nc)
 print.nc(nc)
