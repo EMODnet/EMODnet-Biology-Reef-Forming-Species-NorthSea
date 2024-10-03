@@ -73,11 +73,11 @@ array <- array(
 dim(array)
 
 
-#== create netcdf file =========================================
+#== create netcdf file =========================================================
 
 nc <- create.nc("product/foo.nc") 
 
-#== add lon coordinates =================
+#== add lon and Lat coordinates ================================================
 
 # Define lon dimension
 dim.def.nc(nc, dimname = "lon", dimlength = length(lon)) 
@@ -113,8 +113,7 @@ var.put.nc(nc, variable = "lat", data = lat)
 # Check
 var.get.nc(nc, variable = "lat")
 
-
-# # Define time dimension
+#=== Define time dimension =====================================================
 # dim.def.nc(nc, dimname = "time", dimlength = length(time)) 
 # 
 # # Define time variable
@@ -197,6 +196,95 @@ att.put.nc(nc, variable = "probability_of_occurrence", name = "_FillValue", type
 att.put.nc(nc, variable = "probability_of_occurrence", name = "long_name", type = "NC_CHAR", value = "Probability of occurrence of biological entity specified elsewhere per unit area of the bed")
 
 var.put.nc(nc, variable = "probability_of_occurrence", data = array) 
+
+#== add global attributes ======================================================
+
+attributes <- list(
+  title = "Habitat suitability for reef-forming species in the North Sea.",
+  summary = "Due to fishing and other human activities, reef forming species have almost completely disappeared over roughly the past century. They are important structures that accomodate juvenile fish and other small organisms. For protection of areas where such reefs could possibly be reintroduced, it is important to define areas that are suitable habitats. This product aims to classify areas in the North Sea based on current occurence in combination with environmental variables that are particularly suitable for these organisms.",                       
+  Conventions = "CF-1.8",
+  # id = "",
+  naming_authority = "emodnet-biology.eu",
+  history = "https://github.com/EMODnet/EMODnet-Biology-Reef-Forming-Species-NorthSea",
+  source = "https://github.com/EMODnet/EMODnet-Biology-Reef-Forming-Species-NorthSea",
+  # processing_level = "",
+  # comment = "", 
+  # acknowledgment = "",
+  license = "CC-BY",
+  standard_name_vocabulary = "CF Standard Name Table v1.8",
+  date_created = as.character(Sys.Date()),
+  creator_name = "Willem Stolte",
+  creator_email = "willem.stolte@deltares.nl",
+  creator_url = "www.deltares.nl",
+  institution = "Deltares",
+  project = "EMODnet-Biology",
+  publisher_name = "EMODnet-Biology",                 
+  publisher_email = "bio@emodnet.eu",                
+  publisher_url = "www.emodnet-biology.eu",                  
+  # geospatial_bounds = "",              
+  # geospatial_bounds_crs = "",          
+  # geospatial_bounds_vertical_crs = "", 
+  geospatial_lat_min = min(lat),
+  geospatial_lat_max = max(lat),
+  geospatial_lon_min = min(lon),
+  geospatial_lon_max = max(lon),
+  # geospatial_vertical_min = "",        
+  # geospatial_vertical_max = "",        
+  # geospatial_vertical_positive = "",  
+  # time_coverage_start = "1911",            
+  # time_coverage_end = "2016",              
+  # time_coverage_duration = "",         
+  # time_coverage_resolution = "",       
+  # uuid = "",                           
+  # sea_name = "",                       
+  # creator_type = "",                   
+  creator_institution = "Deltares",            
+  # publisher_type = "",                 
+  publisher_institution = "Flanders Marine Institute (VLIZ)",        
+  # program = "",                        
+  # contributor_name = "",               
+  # contributor_role  = "",              
+  geospatial_lat_units = "degrees_north",           
+  geospatial_lon_units = "degrees_east",           
+  # geospatial_vertical_units   = "",    
+  # date_modified = "",               
+  # date_issued = "",                    
+  # date_metadata_modified   = "",       
+  # product_version = "",            
+  # keywords_vocabulary = "",          
+  # platform  = "",              
+  # platform_vocabulary = "",          
+  # instrument = "",          
+  # instrument_vocabulary  = "",        
+  # featureType = "Point",                  
+  # metadata_link = "",                  
+  # references = "",
+  comment = "Uses attributes recommended by http://cfconventions.org",
+  license = "CC-BY", 
+  publisher_name = "EMODnet Biology Data Management Team",
+  citation = "P.M.J.Herman, and F.F. van Rees. 2022. “Mapping Reef Forming North Sea Species.” Delft. https://pub.kennisbank.deltares.nl/Details/fullCatalogue/1000020826.",
+  acknowledgement = "European Marine Observation Data Network (EMODnet) Biology project (EMFF/2019/1.3.1.9/Lot 6/SI2.837974), funded by the European Union under Regulation (EU) No 508/2014 of the European Parliament and of the Council of 15 May 2014 on the European Maritime and Fisheries Fund"
+)
+
+# Define function that detects if the data type should be character of 
+# integer and add to global attributes
+add_global_attributes <- function(nc, attributes){
+  
+  stopifnot(is.list(attributes))
+  
+  for(i in 1:length(attributes)){
+    if(is.character(attributes[[i]])){
+      type <- "NC_CHAR"
+    }else if(is.numeric(attributes[[i]])){
+      type <- "NC_DOUBLE"
+    }
+    att.put.nc(nc, variable = "NC_GLOBAL", name = names(attributes[i]), type = type, value = attributes[[i]])
+  }
+  sync.nc(nc)
+}
+
+# Add attributes
+add_global_attributes(nc, attributes)
 
 sync.nc(nc)
 print.nc(nc)
