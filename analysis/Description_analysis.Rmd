@@ -3,8 +3,10 @@ title: "Mapping Reef forming North Sea Species"
 author: "Peter M.J. Herman and Floris van Rees"
 date: "11/2/2021"
 output:
+  github_document: default
   word_document: default
   pdf_document: default
+
 ---
 
 ```{r setup, include=FALSE}
@@ -332,7 +334,7 @@ extr_spec<-function(AphiaID,filnam){
   projection(sabs)<-proWG
   # writeOGR(sabs, file.path(spec_data_dir,filnam), filnam, 
   #          driver="ESRI Shapefile",overwrite_layer = TRUE)
-  sf::st_write(sf::st_as_sf(sabs), file.path(spec_data_dir,paste0(filnam, ".shp")))
+  sf::st_write(sf::st_as_sf(sabs), file.path(spec_data_dir,paste0(filnam, ".shp")), append = F)
 }
 
 extr_spec(130867,"Sabellaria")
@@ -449,9 +451,8 @@ rps %>% sf::st_join(tt) %>%
   sf::st_transform(proWG)
 # and store as data frame
 rp <- rps %>% 
-  mutate(x = sf::st_coordinates(.)[1],
-         y = sf::st_coordinates(.)[1])
-
+  mutate(x = sf::st_coordinates(geometry)[,1],
+         y = sf::st_coordinates(geometry)[,2]) %>%
   sf::st_drop_geometry()
 rp <- rp %>%
   mutate(eventNummer=row_number()+300000,
@@ -475,25 +476,28 @@ ost<-rbind(ostrea_HW,ostrea_P)
 ost <- ost[!(ost$lat==0 & ost$lon==0),]
 ost$presabs <- ost$ostrea_edulis_pres
 ost <- ost[,c(6,7,21)]
-coordinates(ost)<- ~lon+lat
-projection(ost)<-proWG
-gils<-readOGR(dsn=file.path(oyster_data_dir,"points_Gilson"),
-              layer="points_Gilson")
+ost <- sf::st_as_sf(ost, coords = c("lon", "lat"), crs = proWG)
+gils<-sf::st_read(file.path(oyster_data_dir, "points_Gilson", "points_Gilson.shp")) %>%
+  sf::st_transform(proWG)
+
 gils<-gils[,-1]
 ost<- rbind(ost,gils)
 # write Ostrea shapefile
-writeOGR(ost, file.path(spec_data_dir,"Ostrea"), "Ostrea", 
-         driver="ESRI Shapefile",overwrite_layer = TRUE)
+sf::st_write(ost, file.path(spec_data_dir,"Ostrea.shp"), append = F)
 # reconstruct data frame with all observations, restructure, and store as binary file
-ost_df<-data.frame(decimalLongitude=coordinates(ost)[,1],
-                   decimalLatitude=coordinates(ost)[,2],
-                   Ostrea=ost$presabs,
-                   Lanice=NA,
-                   Modiolus=NA,
-                   Sabellaria=NA,
-                   eventNummer=NA,
-                   eventDate=NA)
-ost_df <- ost_df %>% mutate(eventNummer=row_number()+200000)
+ost_df <- ost %>%
+    mutate(decimalLongitude = sf::st_coordinates(geometry)[,1],
+         decimalLatitude = sf::st_coordinates(geometry)[,2]) %>%
+  sf::st_drop_geometry() %>%
+  rename(Ostrea = presabs) %>%
+  mutate(
+    Lanice=NA,
+    Modiolus=NA,
+    Sabellaria=NA,
+    eventNummer=NA,
+    eventDate=NA
+  ) %>% 
+  mutate(eventNummer=row_number() + 200000)
 save(ost_df,file=file.path(oyster_data_dir,"ost_df.Rdata"))
 ```
 
@@ -648,6 +652,7 @@ save(outtble,file=file.path(output_dir,"outtble.Rdata"))
 
 
 ```{r random_forest_regression,echo=TRUE,eval=TRUE}
+require(randomForest)
 void<-c("mean_stress","depth","bpi5","bpi10","bpi75","meantemp","difftemp",
         "salinity","gravel","mud")
 outtblerf<-data.frame(terms=void,IM_Sabel=void,INP_Sabel=void,IM_Modiol=void,
