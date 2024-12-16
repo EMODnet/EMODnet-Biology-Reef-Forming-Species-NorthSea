@@ -75,7 +75,7 @@ dim(array)
 
 #== create netcdf file =========================================================
 
-nc <- create.nc("product/foo.nc") 
+nc <- create.nc("product/habitat_suitability_reef_forming_species_north_sea.nc") 
 
 #== add lon and Lat coordinates ================================================
 
@@ -189,13 +189,13 @@ att.put.nc(nc, variable = "crs", name = "GeoTransform", type = "NC_CHAR", value 
 
 
 # Create the presence_absence variable defined by the four dimensions
-var.def.nc(nc, varname = "probability_of_occurrence", vartype = "NC_DOUBLE", dimensions = c("lon", "lat", "aphiaid"))
+var.def.nc(nc, varname = "habitat_suitability", vartype = "NC_DOUBLE", dimensions = c("lon", "lat", "aphiaid"))
 
 # Add attributes
-att.put.nc(nc, variable = "probability_of_occurrence", name = "_FillValue", type = "NC_DOUBLE", value = -99999)
-att.put.nc(nc, variable = "probability_of_occurrence", name = "long_name", type = "NC_CHAR", value = "Probability of occurrence of biological entity specified elsewhere per unit area of the bed")
+att.put.nc(nc, variable = "habitat_suitability", name = "_FillValue", type = "NC_DOUBLE", value = -99999)
+att.put.nc(nc, variable = "habitat_suitability", name = "long_name", type = "NC_CHAR", value = "Habitat suitability of biological entity specified elsewhere per unit area of the bed")
 
-var.put.nc(nc, variable = "probability_of_occurrence", data = array) 
+var.put.nc(nc, variable = "habitat_suitability", data = array) 
 
 #== add global attributes ======================================================
 
