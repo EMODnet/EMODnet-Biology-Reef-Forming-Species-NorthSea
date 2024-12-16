@@ -75,13 +75,15 @@ The random forest regression analysis generated maps with suitable habitats for 
 
 ## More information:
 
-The Rmarkdown file "Description_analysis.Rmd" describes the complete analysis, with code.
+The Rmarkdown file [Description_analysis.Rmd](https://github.com/EMODnet/EMODnet-Biology-Reef-Forming-Species-NorthSea/blob/master/analysis/Description_analysis.md) describes the complete analysis, with code.
 
 ### References
 
 ### Code and methodology
 
 #### Regression analysis
+
+Code and explanation can be found in the "scripts" and "analysis" folder. An Rmd file is found here: [Description_analysis.Rmd](https://github.com/EMODnet/EMODnet-Biology-Reef-Forming-Species-NorthSea/blob/master/analysis/Description_analysis.md).
 
 Species distribution models have been prepared using random forest regression. The fisheries intensity was not relevant as a predictor for the oyster, as the oyster data are historical nineteenth-century reconstructions. It turned out that for the other three species, the predictive power of the three fisheries intensities was very low. The variables have been removed from the analysis. Furthermore, sand fraction has also been removed from the analysis, because it is fully collinear with mud and gravel fractions: the three together always sum to 1. From the BPI variables, we only retained BPI at 5, 10 and 75 km, as the other classes (30 and 50 km) were usually redundant with these three. The remaining variables all had at least some importance in almost all regression models. If a single factor was occasionally not statistically relevant, it was still maintained in the analysis in order to keep consistency between the different species. n the random forest model, there were clear signs of overfitting in the *Ostrea* model, when only the expedition data were used. Overfitting was manifested because the prediction model only predicted occurrence in a very narrow band around the positive observations, not in between them. This defect was much less apparent after we added the pseudo-data based on the historical maps. For the other random forest models, no clear signs of overfitting were apparent, although it might sometimes be the case in the *Modiolus* map.
 
