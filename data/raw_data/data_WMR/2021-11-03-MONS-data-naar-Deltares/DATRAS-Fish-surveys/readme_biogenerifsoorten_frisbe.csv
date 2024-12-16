@@ -1,0 +1,17 @@
+variabele,betekenis,eenheid
+year,jaar monstername,
+pgm_code,programmacode (frisbe),
+month,maand monstername,
+day,dag monstername,
+code,stationscodering,
+sample,monsternummer (uniek per jaar),
+scientific_name,wetenschappelijke soortnaam,
+latitude_s,uitzetpositie breedte,decimaal
+longitude_s,uitzetpositie lengte,decimaal
+water_depth_s,waterdiepte op uitzetpositie,m
+dutch_name,Nederlandse soortnaam,
+tor_code,tuigcodering (in geval van boomkor weerspiefgelt het getal in de naam de breedte van het tuig),
+duration,trekduur,minuten
+bottom_track,afgelegde afstand,m
+number,aantal gevangen in trek,
+wght,natgewicht in trek,

@@ -1,0 +1,17 @@
+year;PGM_CODE;month;day;CODE;sample;SCIENTIFIC_NAME;latitude_s;longitude_s;water_depth_s;DUTCH_NAME;DURATION;TOR_CODE;BOTTOM_TRACK;number;wght;pressence
+2011;IBTS;1;25;37F7006;3400006;Lanice conchilega;54.32717;7.32983;41.9;Zandkokerworm;30;GOV;4221;1;3;1
+2011;IBTS;2;24;34F3070;3400070;Lanice conchilega;52.58567;3.3055;24.2;Zandkokerworm;30;GOV;4663;;5;1
+2017;IBTS;1;25;35F3003;3400003;Lanice conchilega;53.37683;3.57683;23.5;Zandkokerworm;30;GOV;3383;4;52;1
+2011;BTS;8;31;45F3028;1400028;Lanice conchilega;58.086;3.10817;72.5;Zandkokerworm;30;Boomkor08w;4286;20;60;1
+2009;BTS;8;27;44F1013;1400013;Lanice conchilega;57.56983;1.387;94;Zandkokerworm;29;Boomkor08w;4076;16;160;1
+2010;BTS;8;24;35F1001;1400001;Lanice conchilega;53.35417;1.71417;31;Zandkokerworm;30;Boomkor08w;4743;12;320;1
+2011;IBTS;2;24;34F3069;3400069;Lanice conchilega;52.67933;3.27017;25.9;Zandkokerworm;30;GOV;4123;;741;1
+2008;IBTS;2;19;30F1046;3400046;Lanice conchilega;50.97717;1.18233;23;Zandkokerworm;30;GOV;;;8400;1
+2009;BTS;8;31;44E8021;1400021;Lanice conchilega;57.74917;-1.36067;95;Zandkokerworm;28;Boomkor08w;3697;10;39050;1
+2015;DFS;9;1;612_036;2200036;Lanice conchilega;53.16793;5.00437;7;Zandkokerworm;15;Boomkor03k;1340;;50000;1
+2015;DFS;9;1;612_034;2200034;Lanice conchilega;53.16415;4.96812;;Zandkokerworm;15;Boomkor03k;1351;;100000;1
+2014;IBTS;2;26;34F1053;3400053;Lanice conchilega;52.9505;1.83267;29;Zandkokerworm;30;GOV;3648;14;327600;1
+2009;BTS;9;2;36F4064;1100064;Lanice conchilega;53.56688;4.27993;30;Zandkokerworm;30;Boomkor08w;3741;128;;1
+2010;DISBT;4;21;16;6000721;Lanice conchilega;55.1;5.06667;45;Zandkokerworm;150;Boomkor12w;;0.5357145;;1
+2011;MAFCONS;9;9;40E9058;1400111;Lanice conchilega;55.77;-0.49267;74;Zandkokerworm;5;Boomkor02;;1;;1
+2011;MVII;6;15;MPA_38A;5001662;Lanice conchilega;51.77917;3.77893;4.6;Zandkokerworm;15;Boomkor06k;1171;10240;;1
