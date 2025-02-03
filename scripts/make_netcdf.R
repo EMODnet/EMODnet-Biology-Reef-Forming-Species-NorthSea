@@ -262,7 +262,7 @@ attributes <- list(
   comment = "Uses attributes recommended by http://cfconventions.org",
   license = "CC-BY", 
   publisher_name = "EMODnet Biology Data Management Team",
-  citation = "P.M.J.Herman, and F.F. van Rees. 2022. “Mapping Reef Forming North Sea Species.” Delft. https://pub.kennisbank.deltares.nl/Details/fullCatalogue/1000020826.",
+  citation = "P.M.J.Herman, and F.F. van Rees (2022). Mapping Reef Forming North Sea Species. Delft. Integrated data products created under the European Marine Observation Data Network (EMODnet) Biology project CINEA/EMFAF/2022/3.5.2/SI2.895681, funded by the European Union under Regulation (EU) No 508/2014 of the European Parliament and of the Council of 15 May 2014 on the European Maritime and Fisheries Fund",
   acknowledgement = "European Marine Observation Data Network (EMODnet) Biology project (EMFF/2019/1.3.1.9/Lot 6/SI2.837974), funded by the European Union under Regulation (EU) No 508/2014 of the European Parliament and of the Council of 15 May 2014 on the European Maritime and Fisheries Fund"
 )
 
