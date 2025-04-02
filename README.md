@@ -93,9 +93,13 @@ This product should be cited as:
 
 P.M.J.Herman, and F.F. van Rees. 2022. “Mapping Reef Forming North Sea Species.” Delft. <https://pub.kennisbank.deltares.nl/Details/fullCatalogue/1000020826>.
 
-Available to download in:
+Available for download in:
 
-{{link_download}}
+Data: https://erddap.emodnet.eu/erddap/griddap/biology_8730_3b9_4612_8c26.nc
+
+Metadata record: https://emodnet.ec.europa.eu/geonetwork/srv/eng/catalog.search#/metadata/6d617269-6e65-696e-666f-000000008730
+
+EMODnet Viewer: https://emodnet.ec.europa.eu/geoviewer/?layers=6d617269-6e65-696e-666f-000000008730:1:1&basemap=ebwbl&active=14126&bounds=-7473683.368577629,3082466.814999999,10427724.524577629,11459766.29&filters=&projection=EPSG:3857
 
 ### Authors
 
